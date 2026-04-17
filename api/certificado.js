@@ -14,37 +14,47 @@ module.exports = async (req, res) => {
     const canvas = createCanvas(width, height)
     const ctx = canvas.getContext('2d')
 
+    // Fondo
     const bg = await loadImage('https://imagenes-one.vercel.app/certificadofondo.png')
     ctx.drawImage(bg, 0, 0, width, height)
 
-    ctx.textAlign = 'center'
+    // 🔥 TEXTO COMO SVG (esto SIEMPRE funciona)
+    const svg = `
+    <svg width="${width}" height="${height}">
+      <style>
+        .title { fill: #8b5c5c; font-size: 48px; font-family: Arial; font-weight: bold; }
+        .text { fill: #444; font-size: 24px; font-family: Arial; }
+        .name { fill: #d16b86; font-size: 40px; font-family: Arial; font-weight: bold; }
+      </style>
 
-    // 🔥 FORZAR ESTILO (esto arregla el bug)
-    ctx.fillStyle = '#000'
-    ctx.font = '48px Arial'
+      <text x="50%" y="100" text-anchor="middle" class="title">
+        CERTIFICADO DE AMOR
+      </text>
 
-    // Título
-    ctx.fillText('CERTIFICADO DE AMOR', width / 2, 100)
+      <text x="50%" y="170" text-anchor="middle" class="text">
+        Este certificado confirma que
+      </text>
 
-    // Texto
-    ctx.font = '24px Arial'
-    ctx.fillText('Este certificado confirma que', width / 2, 170)
+      <text x="50%" y="260" text-anchor="middle" class="name">
+        ${name1}
+      </text>
 
-    // 💑 Nombres
-    ctx.fillStyle = '#ff4d6d'
-    ctx.font = '40px Arial'
-    ctx.fillText(name1, width / 2, 260)
+      <text x="50%" y="300" text-anchor="middle" class="text">
+        ❤
+      </text>
 
-    ctx.font = '30px Arial'
-    ctx.fillText('&', width / 2, 300)
+      <text x="50%" y="340" text-anchor="middle" class="name">
+        ${name2}
+      </text>
 
-    ctx.font = '40px Arial'
-    ctx.fillText(name2, width / 2, 340)
+      <text x="50%" y="420" text-anchor="middle" class="text">
+        Están oficialmente en una relación 💖
+      </text>
+    </svg>
+    `
 
-    // Final
-    ctx.fillStyle = '#000'
-    ctx.font = '24px Arial'
-    ctx.fillText('Están oficialmente en una relación 💖', width / 2, 420)
+    const textImage = await loadImage(Buffer.from(svg))
+    ctx.drawImage(textImage, 0, 0)
 
     const buffer = canvas.toBuffer('image/png')
 

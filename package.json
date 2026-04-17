@@ -1,7 +1,5 @@
 {
-  "name": "certificado-api",
-  "version": "1.0.0",
   "dependencies": {
-    "canvas": "^2.11.2"
+    "@napi-rs/canvas": "^0.1.50"
   }
 }

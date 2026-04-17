@@ -14,54 +14,37 @@ module.exports = async (req, res) => {
     const canvas = createCanvas(width, height)
     const ctx = canvas.getContext('2d')
 
-    // Fondo
     const bg = await loadImage('https://imagenes-one.vercel.app/certificadofondo.png')
     ctx.drawImage(bg, 0, 0, width, height)
 
     ctx.textAlign = 'center'
 
-    // ✨ Sombra suave
-    ctx.shadowColor = 'rgba(0,0,0,0.2)'
-    ctx.shadowBlur = 10
+    // 🔥 FORZAR ESTILO (esto arregla el bug)
+    ctx.fillStyle = '#000'
+    ctx.font = '48px Arial'
 
     // Título
-    ctx.fillStyle = '#8b5c5c'
-    ctx.font = 'bold 48px sans-serif'
-    ctx.fillText('CERTIFICADO DE AMOR', width / 2, 95)
-
-    // Reset sombra
-    ctx.shadowBlur = 0
+    ctx.fillText('CERTIFICADO DE AMOR', width / 2, 100)
 
     // Texto
-    ctx.fillStyle = '#555'
-    ctx.font = '24px sans-serif'
-    ctx.fillText('Este certificado confirma que', width / 2, 160)
+    ctx.font = '24px Arial'
+    ctx.fillText('Este certificado confirma que', width / 2, 170)
 
-    // 💖 NOMBRES (con glow)
-    ctx.fillStyle = '#d16b86'
-    ctx.shadowColor = '#ff9bb0'
-    ctx.shadowBlur = 20
+    // 💑 Nombres
+    ctx.fillStyle = '#ff4d6d'
+    ctx.font = '40px Arial'
+    ctx.fillText(name1, width / 2, 260)
 
-    ctx.font = 'bold 42px sans-serif'
-    ctx.fillText(name1, width / 2, 250)
+    ctx.font = '30px Arial'
+    ctx.fillText('&', width / 2, 300)
 
-    ctx.font = '32px sans-serif'
-    ctx.fillText('❤', width / 2, 290)
-
-    ctx.font = 'bold 42px sans-serif'
+    ctx.font = '40px Arial'
     ctx.fillText(name2, width / 2, 340)
 
-    ctx.shadowBlur = 0
-
-    // Mensaje final
-    ctx.fillStyle = '#444'
-    ctx.font = '24px sans-serif'
-    ctx.fillText('Están oficialmente en una relación 💖', width / 2, 410)
-
-    // Fecha
-    const fecha = new Date().toLocaleDateString('es-AR')
-    ctx.font = '20px sans-serif'
-    ctx.fillText(`Fecha: ${fecha}`, width / 2, 460)
+    // Final
+    ctx.fillStyle = '#000'
+    ctx.font = '24px Arial'
+    ctx.fillText('Están oficialmente en una relación 💖', width / 2, 420)
 
     const buffer = canvas.toBuffer('image/png')
 
@@ -70,6 +53,6 @@ module.exports = async (req, res) => {
 
   } catch (e) {
     console.error(e)
-    res.status(500).send('Error generando imagen')
+    res.status(500).send('Error')
   }
 }
